@@ -1,0 +1,6 @@
+{
+  "name": "KIBOSH",
+  "description": "KIBOSH - Automated multi-channel payroll distribution platform for splitting PDF payslips, matching employee records, sending via Email and WhatsApp, tracking deliverability, and full audit logging.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
