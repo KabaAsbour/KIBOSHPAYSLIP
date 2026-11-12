@@ -8,6 +8,7 @@ import { createServer as createViteServer } from 'vite';
 import authRoutes from './src/server/routes/authRoutes';
 import protectedRoutes from './src/server/routes/protectedRoutes';
 import platformRoutes from './src/server/routes/platformRoutes';
+import sendEmailHandler from './api/send-email';
 import { DbService } from './src/server/services/dbService';
 import { PdfStoreService } from './src/server/services/pdfStoreService';
 import { EmailService } from './src/server/services/emailService';
@@ -80,7 +81,40 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// 6. Mount Auth & Protected API Routes
+// 6. Public / Specific API Routes
+app.post('/api/send-email', (req, res) => sendEmailHandler(req, res));
+app.post('/api/send-whatsapp', async (req, res) => {
+  try {
+    const { toPhone, employeeName, messageText, pdfLink } = req.body;
+
+    if (!toPhone) {
+      return res.status(400).json({ success: false, error: 'Numéro WhatsApp du destinataire requis.' });
+    }
+
+    const cleanPhone = toPhone.replace(/[^0-9]/g, '');
+    const encodedText = encodeURIComponent(messageText || `Bonjour ${employeeName || ''}, voici votre bulletin de paie PDF : ${pdfLink || ''}`);
+    const waMeLink = `https://wa.me/${cleanPhone}?text=${encodedText}`;
+
+    return res.json({
+      success: true,
+      isRealWhatsApp: false,
+      messageId: `wamsg-${Date.now()}`,
+      status: 'Delivered',
+      recipient: toPhone,
+      cleanPhone,
+      waMeLink,
+      deliveredAt: new Date().toISOString(),
+      note: 'Message WhatsApp traité avec succès (Mode Simulation / Lien WhatsApp).'
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      error: error?.message || 'Erreur lors de l\'envoi WhatsApp'
+    });
+  }
+});
+
+// 7. Mount Auth, Platform & Protected API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/platform', platformRoutes);
 app.use('/api/v1', protectedRoutes);
@@ -129,54 +163,6 @@ startxref
 434
 %%EOF`;
   return res.send(Buffer.from(fallbackPdf));
-});
-
-// 8. Legacy Backwards Compatible Email Route with SSRF Protection
-app.post('/api/send-email', async (req, res) => {
-  try {
-    const result = await EmailService.sendMail(req.body);
-    return res.json({
-      success: true,
-      ...result
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      error: error?.message || 'SMTP Error: Failed to transmit message'
-    });
-  }
-});
-
-// 9. Legacy Backwards Compatible WhatsApp Delivery Endpoint
-app.post('/api/send-whatsapp', async (req, res) => {
-  try {
-    const { toPhone, employeeName, messageText, pdfLink } = req.body;
-
-    if (!toPhone) {
-      return res.status(400).json({ success: false, error: 'Numéro WhatsApp du destinataire requis.' });
-    }
-
-    const cleanPhone = toPhone.replace(/[^0-9]/g, '');
-    const encodedText = encodeURIComponent(messageText || `Bonjour ${employeeName || ''}, voici votre bulletin de paie PDF : ${pdfLink || ''}`);
-    const waMeLink = `https://wa.me/${cleanPhone}?text=${encodedText}`;
-
-    return res.json({
-      success: true,
-      isRealWhatsApp: false,
-      messageId: `wamsg-${Date.now()}`,
-      status: 'Delivered',
-      recipient: toPhone,
-      cleanPhone,
-      waMeLink,
-      deliveredAt: new Date().toISOString(),
-      note: 'Message WhatsApp traité avec succès (Mode Simulation / Lien WhatsApp).'
-    });
-  } catch (error: any) {
-    return res.status(500).json({
-      success: false,
-      error: error?.message || 'Erreur lors de l\'envoi WhatsApp'
-    });
-  }
 });
 
 // 10. Vite Middleware & Static Production Handler

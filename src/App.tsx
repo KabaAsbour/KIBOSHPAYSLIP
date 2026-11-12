@@ -83,7 +83,9 @@ export default function App() {
 
   // Inactivity Timeout Logout Handler
   const handleTimeoutLogout = () => {
-    logAudit('SESSION_TIMEOUT', 'AUTHENTICATION', 'Automatic logout executed after 15 minutes of user inactivity.');
+    if (userSession) {
+      logAudit('SESSION_TIMEOUT', 'AUTHENTICATION', `Automatic logout executed after 15 minutes of user inactivity for ${userSession.email}.`);
+    }
     StorageService.clearCurrentUserSession();
     setUserSession(null);
     pushNotification(
@@ -142,7 +144,7 @@ export default function App() {
     inactivityTimeoutMs: 15 * 60 * 1000, // 15 minutes inactive limit
     warningDurationSeconds: 60,
     onTimeoutLogout: handleTimeoutLogout,
-    enabled: !isLoginModalOpen && !isRegisterModalOpen
+    enabled: !!userSession && !isLoginModalOpen && !isRegisterModalOpen
   });
 
   // Helpers to add audit logs & notifications
@@ -153,8 +155,8 @@ export default function App() {
     result: AuditLog['result'] = 'Success'
   ) => {
     const newLog = StorageService.addAuditLog({
-      user: userSession.name,
-      userRole: userSession.role,
+      user: userSession?.name || 'Système',
+      userRole: userSession?.role || 'Company Administrator',
       ipAddress: '192.168.10.45',
       action,
       category,

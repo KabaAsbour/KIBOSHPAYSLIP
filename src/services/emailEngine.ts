@@ -305,7 +305,13 @@ export class EmailEngine {
             })
           });
 
-          const resData = await response.json();
+          const rawText = await response.text();
+          let resData: any = {};
+          try {
+            resData = rawText ? JSON.parse(rawText) : {};
+          } catch {
+            resData = { success: false, error: `Réponse serveur non-JSON (Code HTTP ${response.status})` };
+          }
 
           // If BOTH is selected, also trigger WhatsApp send
           if (targetChannel === 'Both' && ps.phone) {

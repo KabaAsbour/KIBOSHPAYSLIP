@@ -737,22 +737,34 @@ export const SystemSettingsView: React.FC<SystemSettingsViewProps> = ({
                       smtpSettings: settings
                     })
                   });
-                  const data = await res.json();
+                  // Safe response parsing: Check raw text before JSON parsing
+                  const rawText = await res.text();
+                  if (!rawText || !rawText.trim()) {
+                    throw new Error(`Le serveur d'envoi a renvoyé une réponse vide (Code HTTP ${res.status} ${res.statusText || ''})`);
+                  }
+
+                  let data: any;
+                  try {
+                    data = JSON.parse(rawText);
+                  } catch {
+                    throw new Error(`Format de réponse non valide (Code HTTP ${res.status}): ${rawText.slice(0, 150)}`);
+                  }
+
                   if (res.ok && data.success) {
                     setTestEmailStatus({
                       success: true,
-                      message: `Connexion SMTP validée ! E-mail de test envoyé à ${recipient} avec succès.`
+                      message: `Connexion validée ! E-mail de test envoyé à ${recipient} avec succès (${data.note || 'Service d\'envoi opérationnel'}).`
                     });
                   } else {
                     setTestEmailStatus({
                       success: false,
-                      message: data.error || 'Échec de la connexion SMTP ou rejet du message par le serveur.'
+                      message: data.error || data.message || `Échec de la connexion ou rejet du message par le serveur (Code HTTP ${res.status}).`
                     });
                   }
                 } catch (e: any) {
                   setTestEmailStatus({
                     success: false,
-                    message: e.message || 'Erreur réseau lors du test de connexion SMTP.'
+                    message: e.message || 'Erreur réseau lors du test de connexion.'
                   });
                 } finally {
                   setIsTestingEmail(false);
@@ -1021,24 +1033,42 @@ export const SystemSettingsView: React.FC<SystemSettingsViewProps> = ({
                           smtpSettings: settings
                         })
                       });
-                      const data = await res.json();
+                      // Safe response parsing: Check raw text before JSON parsing
+                      const rawText = await res.text();
+                      if (!rawText || !rawText.trim()) {
+                        throw new Error(`Le serveur d'envoi a renvoyé une réponse vide (Code HTTP ${res.status} ${res.statusText || ''})`);
+                      }
+
+                      let data: any;
+                      try {
+                        data = JSON.parse(rawText);
+                      } catch {
+                        throw new Error(`Format de réponse non valide (Code HTTP ${res.status}): ${rawText.slice(0, 150)}`);
+                      }
+
                       if (res.ok && data.success) {
                         if (data.isRealSmtp) {
                           setTestEmailStatus({
                             success: true,
-                            message: `✅ E-mail SMTP réel envoyé à ${testRecipientEmail} ! (Livraison confirmée via ${settings.smtpHost})`
+                            message: `✅ E-mail réel envoyé à ${testRecipientEmail} ! (${data.note || 'Livraison confirmée'})`
                           });
                         } else {
                           setTestEmailStatus({
                             success: false,
-                            message: `⚠️ Mode simulation (Bac à Sable) : L'envoi est validé en interne, mais AUCUN e-mail réel n'est transmis à Gmail tant que la case "Mot de Passe SMTP / App Password" est vide.`
+                            message: `⚠️ Mode simulation : ${data.note || 'L\'envoi est validé en interne, mais aucun e-mail réel n\'est transmis tant que RESEND_API_KEY ou les identifiants SMTP ne sont pas configurés.'}`
                           });
                         }
                       } else {
-                        setTestEmailStatus({ success: false, message: data.error || 'Échec de l\'envoi du message' });
+                        setTestEmailStatus({
+                          success: false,
+                          message: data.error || data.message || `Échec de l'envoi du message (Code HTTP ${res.status})`
+                        });
                       }
                     } catch (e: any) {
-                      setTestEmailStatus({ success: false, message: e.message || 'Erreur lors de l\'envoi' });
+                      setTestEmailStatus({
+                        success: false,
+                        message: e.message || 'Erreur lors de l\'envoi'
+                      });
                     } finally {
                       setIsTestingEmail(false);
                     }
