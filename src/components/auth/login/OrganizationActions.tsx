@@ -11,22 +11,22 @@ export const OrganizationActions: React.FC<OrganizationActionsProps> = ({
   onRegisterCompany
 }) => {
   return (
-    <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 text-xs">
+    <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-center">
       <button
         type="button"
         onClick={onSwitchOrganization}
-        className="text-slate-600 hover:text-blue-700 font-semibold transition-colors flex items-center gap-1.5 cursor-pointer py-1 group"
+        className="text-slate-700 hover:text-blue-700 font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer py-1 group"
       >
-        <Building2 className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+        <Building2 className="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-600 transition-colors" />
         <span>Changer d'organisation</span>
       </button>
 
       <button
         type="button"
         onClick={onRegisterCompany}
-        className="text-slate-600 hover:text-blue-700 font-semibold transition-colors flex items-center gap-1.5 cursor-pointer py-1 group"
+        className="text-slate-700 hover:text-blue-700 font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer py-1 group"
       >
-        <UserPlus className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+        <UserPlus className="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-600 transition-colors" />
         <span>Inscrire une entreprise</span>
       </button>
     </div>

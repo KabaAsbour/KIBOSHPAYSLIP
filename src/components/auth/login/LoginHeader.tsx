@@ -13,10 +13,10 @@ export const LoginHeader: React.FC<LoginHeaderProps> = ({
   description = 'Connectez-vous pour gérer, traiter et distribuer les bulletins de paie de votre organisation.'
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-center flex flex-col items-center">
       {/* Brand Lockup */}
-      <div className="flex items-center gap-3.5">
-        <div className="w-12 h-12 rounded-2xl overflow-hidden border border-slate-200/90 shadow-sm bg-slate-950 shrink-0 flex items-center justify-center p-1 ring-2 ring-slate-100">
+      <div className="flex flex-col items-center justify-center gap-2.5 text-center">
+        <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200/90 shadow-sm bg-slate-950 shrink-0 flex items-center justify-center p-1 ring-2 ring-slate-100">
           <img
             src={kiboshLogo}
             alt="KIBOSH Logo"
@@ -24,24 +24,24 @@ export const LoginHeader: React.FC<LoginHeaderProps> = ({
             referrerPolicy="no-referrer"
           />
         </div>
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2">
             <span className="font-mono font-black text-xl tracking-wider text-slate-900">
               KIBOSH
             </span>
           </div>
-          <p className="text-xs font-semibold text-blue-700 tracking-wide">
+          <p className="text-xs font-bold text-blue-700 tracking-wide">
             {subtitle}
           </p>
         </div>
       </div>
 
       {/* Primary Heading & Supporting Copy */}
-      <div className="space-y-1.5 pt-1">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+      <div className="space-y-2 pt-1 text-center">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-center">
           {title}
         </h1>
-        <p className="text-sm text-slate-600 leading-relaxed max-w-md">
+        <p className="text-sm font-bold text-slate-700 leading-relaxed max-w-md mx-auto text-center">
           {description}
         </p>
       </div>

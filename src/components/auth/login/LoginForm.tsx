@@ -48,10 +48,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       {activeError && (
         <div 
           role="alert"
-          className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2.5 animate-in fade-in"
+          className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center justify-center text-center gap-2.5 animate-in fade-in"
         >
-          <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
-          <span className="font-semibold leading-relaxed">{activeError}</span>
+          <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+          <span className="font-bold leading-relaxed">{activeError}</span>
         </div>
       )}
 
@@ -59,18 +59,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       {successMessage && (
         <div 
           role="status"
-          className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-2.5 animate-in fade-in"
+          className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center justify-center text-center gap-2.5 animate-in fade-in"
         >
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-          <span className="font-semibold leading-relaxed">{successMessage}</span>
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+          <span className="font-bold leading-relaxed">{successMessage}</span>
         </div>
       )}
 
       {/* Field 1: Identifiant, e-mail ou téléphone */}
-      <div>
+      <div className="text-center">
         <label 
           htmlFor="kibosh-identifier" 
-          className="block text-xs font-bold text-slate-700 mb-1.5"
+          className="block text-xs font-bold text-slate-800 mb-1.5 text-center"
         >
           Identifiant, e-mail ou téléphone
         </label>
@@ -91,16 +91,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               if (validationError) setValidationError(null);
             }}
             disabled={isLoading}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-medium text-slate-900 outline-none transition-all placeholder-slate-400 bg-slate-50/60 disabled:opacity-60"
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-bold text-slate-900 text-center outline-none transition-all placeholder-slate-400 placeholder:font-semibold bg-slate-50/60 disabled:opacity-60"
           />
         </div>
       </div>
 
       {/* Field 2: Mot de passe */}
-      <div>
+      <div className="text-center">
         <label 
           htmlFor="kibosh-password" 
-          className="block text-xs font-bold text-slate-700 mb-1.5"
+          className="block text-xs font-bold text-slate-800 mb-1.5 text-center"
         >
           Mot de passe
         </label>
@@ -121,7 +121,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               if (validationError) setValidationError(null);
             }}
             disabled={isLoading}
-            className="w-full pl-10 pr-11 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-medium text-slate-900 outline-none transition-all placeholder-slate-400 bg-slate-50/60 disabled:opacity-60"
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-bold text-slate-900 text-center outline-none transition-all placeholder-slate-400 placeholder:font-semibold bg-slate-50/60 disabled:opacity-60"
           />
           <button
             type="button"
@@ -135,7 +135,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       {/* Row: Remember Me + Forgot Password */}
-      <div className="flex items-center justify-between text-xs pt-0.5">
+      <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs pt-0.5">
         <label className="flex items-center gap-2 cursor-pointer select-none">
           <input
             type="checkbox"
@@ -143,13 +143,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             onChange={(e) => setRememberMe(e.target.checked)}
             className="w-4 h-4 rounded text-blue-600 border-slate-300 focus:ring-blue-500 cursor-pointer"
           />
-          <span className="text-slate-600 font-medium">Se souvenir de moi</span>
+          <span className="text-slate-700 font-bold">Se souvenir de moi</span>
         </label>
 
         <button
           type="button"
           onClick={onForgotPassword}
-          className="text-blue-600 hover:text-blue-800 font-semibold transition-colors cursor-pointer"
+          className="text-blue-600 hover:text-blue-800 font-bold transition-colors cursor-pointer"
         >
           Mot de passe oublié ?
         </button>

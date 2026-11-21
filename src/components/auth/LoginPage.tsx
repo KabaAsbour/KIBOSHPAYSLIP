@@ -539,7 +539,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
           {/* ========================================================= */}
           {/* LEFT PANEL — AUTHENTICATION (Clean, Bright, Enterprise)  */}
           {/* ========================================================= */}
-          <div className="lg:col-span-5 xl:col-span-5 bg-white p-6 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-between border-r border-slate-200/80 relative z-10 shadow-xs">
+          <div className="lg:col-span-5 xl:col-span-5 bg-white p-6 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-between border-r border-slate-200/80 relative z-10 shadow-xs text-center">
             
             {/* Modal Close Button if invoked as modal */}
             {isModal && onClose && (
@@ -553,7 +553,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               </button>
             )}
 
-            <div>
+            <div className="w-full max-w-md mx-auto">
               {/* Top Login Header: Brand Logo, Subtitle, Heading, Description */}
               <LoginHeader
                 subtitle="Payroll Distribution Platform"
@@ -606,12 +606,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
               {/* ---------------- VIEW 2: TOTP (2FA) ---------------- */}
               {authView === 'totp' && (
-                <div className="mt-6 space-y-5">
+                <div className="mt-6 space-y-5 text-center">
                   {otpUserSummary && (
-                    <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                    <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-1.5 text-xs text-center">
                       <div>
                         <div className="font-bold text-slate-900">{otpUserSummary.name}</div>
-                        <div className="text-[11px] text-slate-500 font-mono">{otpUserSummary.email}</div>
+                        <div className="text-[11px] text-slate-500 font-mono font-bold">{otpUserSummary.email}</div>
                       </div>
                       <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
                         {otpUserSummary.role}
@@ -620,17 +620,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                   )}
 
                   {errorMessage && (
-                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
+                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center justify-center gap-2">
                       <ShieldAlert className="w-4 h-4 text-red-600 shrink-0" />
-                      <span className="font-semibold">{errorMessage}</span>
+                      <span className="font-bold">{errorMessage}</span>
                     </div>
                   )}
 
                   <form onSubmit={handleOtpSubmit} className="space-y-4">
                     {!useBackupCodeMode ? (
                       <div>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <label className="text-xs font-bold text-slate-700">
+                        <div className="flex items-center justify-center gap-3 mb-1.5">
+                          <label className="text-xs font-bold text-slate-800">
                             Code TOTP (6 chiffres)
                           </label>
                           <span className="text-[11px] font-mono text-emerald-600 font-bold flex items-center gap-1">
@@ -650,7 +650,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       </div>
                     ) : (
                       <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                        <label className="block text-xs font-bold text-slate-800 mb-1.5 text-center">
                           Code de secours (8 caractères)
                         </label>
                         <input
@@ -682,14 +682,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       )}
                     </button>
 
-                    <div className="flex items-center justify-between text-xs pt-1">
+                    <div className="flex items-center justify-center gap-6 text-xs pt-1">
                       <button
                         type="button"
                         onClick={() => {
                           setErrorMessage(null);
                           setAuthView('login');
                         }}
-                        className="text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-1 cursor-pointer font-medium"
+                        className="text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-1 cursor-pointer font-bold"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         <span>Retour</span>
@@ -698,7 +698,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       <button
                         type="button"
                         onClick={() => setUseBackupCodeMode(!useBackupCodeMode)}
-                        className="text-blue-600 hover:underline font-semibold cursor-pointer"
+                        className="text-blue-600 hover:underline font-bold cursor-pointer"
                       >
                         {useBackupCodeMode ? 'Utiliser code TOTP' : 'Code de secours'}
                       </button>
@@ -709,23 +709,23 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
               {/* ---------------- VIEW 3: FORCED PASSWORD CHANGE ---------------- */}
               {authView === 'force_password' && (
-                <div className="mt-6 space-y-4">
-                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
+                <div className="mt-6 space-y-4 text-center">
+                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-center gap-2">
                     <KeyRound className="w-4 h-4 text-amber-600 shrink-0" />
-                    <span className="font-medium">
+                    <span className="font-bold">
                       Sécurité obligatoire : veuillez définir un nouveau mot de passe personnel.
                     </span>
                   </div>
 
                   {errorMessage && (
-                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs">
+                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
                       {errorMessage}
                     </div>
                   )}
 
                   <form onSubmit={handleForcePasswordSubmit} className="space-y-3.5">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-slate-800 mb-1 text-center">
                         Nouveau mot de passe
                       </label>
                       <div className="relative">
@@ -738,7 +738,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                           placeholder="Min. 8 car., 1 majuscule, 1 chiffre"
                           value={newPasswordInput}
                           onChange={(e) => setNewPasswordInput(e.target.value)}
-                          className="w-full pl-10 pr-11 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs text-slate-900 outline-none"
+                          className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-bold text-slate-900 text-center outline-none"
                         />
                         <button
                           type="button"
@@ -751,7 +751,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-xs font-bold text-slate-800 mb-1 text-center">
                         Confirmer le nouveau mot de passe
                       </label>
                       <div className="relative">
@@ -764,7 +764,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                           placeholder="Répétez le mot de passe"
                           value={confirmNewPasswordInput}
                           onChange={(e) => setConfirmNewPasswordInput(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs text-slate-900 outline-none"
+                          className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-bold text-slate-900 text-center outline-none"
                         />
                       </div>
                     </div>
@@ -792,8 +792,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
               {/* ---------------- VIEW 4: FORGOT PASSWORD ---------------- */}
               {authView === 'forgot_password' && (
-                <div className="mt-6 space-y-4">
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                <div className="mt-6 space-y-4 text-center">
+                  <p className="text-xs font-bold text-slate-700 leading-relaxed">
                     Saisissez l'adresse e-mail professionnelle associée à votre compte KIBOSH. Un lien temporaire sécurisé vous sera envoyé.
                   </p>
 
@@ -806,14 +806,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     className="space-y-4"
                   >
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      <label className="block text-xs font-bold text-slate-800 mb-1.5 text-center">
                         Adresse e-mail professionnelle
                       </label>
                       <input
                         type="email"
                         required
                         placeholder="nom@entreprise.com"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs text-slate-900 outline-none bg-slate-50/50"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 text-xs font-bold text-slate-900 text-center outline-none bg-slate-50/50"
                       />
                     </div>
 
@@ -828,7 +828,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                       <button
                         type="button"
                         onClick={() => setAuthView('login')}
-                        className="text-xs text-slate-600 hover:text-slate-900 font-semibold cursor-pointer"
+                        className="text-xs text-slate-700 hover:text-slate-900 font-bold cursor-pointer"
                       >
                         ← Retour à la connexion
                       </button>
@@ -839,15 +839,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
               {/* ---------------- VIEW 5: ORGANIZATION SWITCHER ---------------- */}
               {authView === 'switch_org' && (
-                <div className="mt-6 space-y-4">
-                  <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                    <span className="text-xs font-bold text-slate-700">
+                <div className="mt-6 space-y-4 text-center">
+                  <div className="flex items-center justify-center gap-4 pb-2 border-b border-slate-100">
+                    <span className="text-xs font-bold text-slate-800">
                       Organisations autorisées ({companies.length})
                     </span>
                     <button
                       type="button"
                       onClick={() => setAuthView('login')}
-                      className="text-xs text-slate-500 hover:text-slate-800 font-semibold cursor-pointer"
+                      className="text-xs text-blue-600 hover:text-blue-800 font-bold cursor-pointer"
                     >
                       ← Retour
                     </button>
@@ -858,7 +858,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                     placeholder="Filtrer par nom ou entreprise..."
                     value={orgSearchTerm}
                     onChange={(e) => setOrgSearchTerm(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs text-slate-900 outline-none focus:border-blue-600 bg-slate-50/50"
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-900 text-center outline-none focus:border-blue-600 bg-slate-50/50"
                   />
 
                   <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
@@ -867,17 +867,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                         key={u.id}
                         type="button"
                         onClick={() => handleSelectSwitchUser(u)}
-                        className="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition-all flex items-center justify-between group cursor-pointer"
+                        className="w-full text-center p-3 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 transition-all flex flex-col items-center justify-center gap-1 group cursor-pointer"
                       >
-                        <div className="min-w-0 pr-2">
+                        <div className="min-w-0">
                           <div className="text-xs font-bold text-slate-900 group-hover:text-blue-700 truncate">
                             {u.fullName}
                           </div>
-                          <div className="text-[11px] text-slate-500 truncate mt-0.5">
-                            {u.role} · <strong className="text-slate-700 font-semibold">{u.companyName}</strong>
+                          <div className="text-[11px] font-bold text-slate-500 truncate mt-0.5">
+                            {u.role} · <strong className="text-slate-700 font-bold">{u.companyName}</strong>
                           </div>
                         </div>
-                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 group-hover:bg-blue-600 group-hover:text-white text-slate-600 transition-colors shrink-0">
+                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-slate-100 group-hover:bg-blue-600 group-hover:text-white text-slate-700 transition-colors shrink-0">
                           Accéder →
                         </span>
                       </button>
@@ -888,7 +888,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             </div>
 
             {/* Bottom Actions: Changer d'organisation & Inscrire une entreprise */}
-            <div className="mt-8">
+            <div className="mt-8 w-full max-w-md mx-auto">
               <OrganizationActions
                 onSwitchOrganization={() => {
                   setErrorMessage(null);

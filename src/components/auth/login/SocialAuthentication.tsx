@@ -16,7 +16,7 @@ export const SocialAuthentication: React.FC<SocialAuthenticationProps> = ({
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-slate-200" />
         </div>
-        <div className="relative px-3 bg-white text-xs font-semibold text-slate-500">
+        <div className="relative px-3 bg-white text-xs font-bold text-slate-600 text-center">
           ou continuer avec
         </div>
       </div>
@@ -28,7 +28,7 @@ export const SocialAuthentication: React.FC<SocialAuthenticationProps> = ({
           type="button"
           disabled={isLoading}
           onClick={() => onSsoLogin('google')}
-          className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/80 text-slate-700 font-semibold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-50"
+          className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/80 text-slate-800 font-bold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-50"
           title="Connexion avec Google Workspace"
         >
           {/* Official Google G Logo */}
@@ -58,7 +58,7 @@ export const SocialAuthentication: React.FC<SocialAuthenticationProps> = ({
           type="button"
           disabled={isLoading}
           onClick={() => onSsoLogin('microsoft')}
-          className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/80 text-slate-700 font-semibold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-50"
+          className="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/80 text-slate-800 font-bold text-xs transition-all shadow-xs cursor-pointer disabled:opacity-50"
           title="Connexion avec Microsoft 365"
         >
           {/* Official Microsoft Logo */}
